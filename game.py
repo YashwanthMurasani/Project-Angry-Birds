@@ -41,13 +41,19 @@ class AngryBirds:
                         self.indrag=True
                 elif (event.type==pygame.MOUSEBUTTONUP and self.indrag==True):
                     self.indrag=False
-                    self.inflight=True
-                    self.distance1=(((self.birdx1-634)**2)+((self.birdy1-764)**2))**0.5
-                    self.sinx=(self.birdy1-764)/self.distance1
-                    self.cosx=(634-self.birdx1)/self.distance1
-                    self.initialVelocity=self.distance1*2/3
-                    self.vx=self.initialVelocity*self.cosx
-                    self.vy=self.initialVelocity*self.sinx
+                    if(self.distance1>50): 
+                        self.inflight=True                     
+                        self.distance1=(((self.birdx1-634)**2)+((self.birdy1-764)**2))**0.5
+                        self.sinx=(self.birdy1-764)/self.distance1
+                        self.cosx=(634-self.birdx1)/self.distance1
+                        self.initialVelocity=self.distance1*2/3
+                        self.vx=self.initialVelocity*self.cosx
+                        self.vy=self.initialVelocity*self.sinx
+                    else:
+                        self.birdx1=634
+                        self.birdy1=764
+                        self.distance1=0
+                        self.inflight=False
             self.screen.blit(self.background,(0,0))      
             self.screen.blit(self.slingshot1,(610,750))
             self.screen.blit(self.slingshot2,(1250,750))
@@ -83,13 +89,19 @@ class AngryBirds:
                         self.indrag=True
                 elif (event.type==pygame.MOUSEBUTTONUP and self.indrag==True):
                     self.indrag=False
-                    self.inflight=True
-                    self.distance2=(((self.birdx2-1286)**2)+((self.birdy2-764)**2))**0.5
-                    self.sinx=(self.birdy2-764)/self.distance2
-                    self.cosx=(1286-self.birdx2)/self.distance2
-                    self.initialVelocity=self.distance2*2/3
-                    self.vx=self.initialVelocity*self.cosx
-                    self.vy=self.initialVelocity*self.sinx
+                    if (self.distance2>50):
+                        self.inflight=True
+                        self.distance2=(((self.birdx2-1286)**2)+((self.birdy2-764)**2))**0.5
+                        self.sinx=(self.birdy2-764)/self.distance2
+                        self.cosx=(1286-self.birdx2)/self.distance2
+                        self.initialVelocity=self.distance2*2/3
+                        self.vx=self.initialVelocity*self.cosx
+                        self.vy=self.initialVelocity*self.sinx
+                    else:
+                        self.birdx2=1286
+                        self.birdy2=764
+                        self.distance2=0
+                        self.inflight=False
             self.screen.blit(self.background,(0,0))      
             self.screen.blit(self.slingshot1,(610,750))
             self.screen.blit(self.slingshot2,(1250,750))
@@ -98,13 +110,14 @@ class AngryBirds:
             pygame.draw.circle(self.screen,(48,25,7),(623,771),5)
             pygame.draw.circle(self.screen,(48,25,7),(1297,771),5)
             if(self.indrag==True):  
+                self.screen.blit(self.red,(200,200))
                 self.birdx2,self.birdy2=pygame.mouse.get_pos()
                 self.distance2=(((self.birdx2-1286)**2)+((self.birdy2-764)**2))**0.5
                 if self.distance2>200:
                     self.birdx2=1286+(200*(self.birdx2-1286)/self.distance2)
                     self.birdy2=764+(200*(self.birdy2-764)/self.distance2)
                 pygame.draw.line(self.screen,(48,25,7),(1278,766),(self.birdx2,self.birdy2),4)
-                pygame.draw.line(self.screen,(48,25,7),(1297,771),(self.birdx2-5,self.birdy2+5),4)
+                pygame.draw.line(self.screen,(48,25,7),(1297,771),(self.birdx2+5,self.birdy2+5),4)
             elif (self.inflight==True):
                 self.birdx2=self.birdx2+self.vx/5
                 self.birdy2=self.birdy2-self.vy/5
